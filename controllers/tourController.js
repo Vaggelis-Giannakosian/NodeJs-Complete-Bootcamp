@@ -36,7 +36,6 @@ exports.getTour = catchAsync(async (req, res, next) => {
     return next(new AppError('No tour found with that id', 404));
   }
 
-<<<<<<< HEAD
   res.status(200).json({
     status: 'success',
     data: {
@@ -44,7 +43,7 @@ exports.getTour = catchAsync(async (req, res, next) => {
     }
   });
 });
-=======
+
 exports.getTour = async (req, res) => {
   try {
     const tour = await Tour.findById(req.params.id);
@@ -63,7 +62,6 @@ exports.getTour = async (req, res) => {
     });
   }
 };
->>>>>>> bbf8373... Completes CRUD operations on tourscontroller
 
 exports.createNewTour = catchAsync(async (req, res, next) => {
   // const newTour = new Tour({ });
@@ -89,7 +87,6 @@ exports.updateTour = catchAsync(async (req, res, next) => {
     return next(new AppError('No tour found with that id', 404));
   }
 
-<<<<<<< HEAD
   res.status(200).json({
     status: 'success',
     data: {
@@ -195,7 +192,7 @@ exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
     }
   });
 });
-=======
+
 exports.updateTour = async (req, res) => {
   try {
     const tour = await Tour.findByIdAndUpdate(
@@ -233,4 +230,3 @@ exports.deleteTour = async (req, res) => {
     });
   }
 };
->>>>>>> bbf8373... Completes CRUD operations on tourscontroller
