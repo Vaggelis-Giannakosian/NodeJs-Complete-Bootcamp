@@ -5,6 +5,7 @@ const AppError = require('./utils/appError');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
+const hpp = require('hpp');
 
 const app = express();
 const tourRouter = require('./routes/tourRoutes');
@@ -43,6 +44,13 @@ app.use(mongoSanitize());
 
 // Data Sanitization against XSS attacks
 app.use(xss());
+
+// Prevent parameter pollution
+app.use(
+  hpp({
+    whitelist: ['duration']
+  })
+);
 
 //Serving static files
 app.use(express.static(`${__dirname}/public`));
