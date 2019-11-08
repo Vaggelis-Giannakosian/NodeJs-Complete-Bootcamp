@@ -44,25 +44,6 @@ exports.getTour = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getTour = async (req, res) => {
-  try {
-    const tour = await Tour.findById(req.params.id);
-    //Tour.findOne({ _id: req.params.id })
-
-    res.status(200).json({
-      status: 'success',
-      data: {
-        tour
-      }
-    });
-  } catch (error) {
-    res.status(404).json({
-      status: 'error',
-      message: error
-    });
-  }
-};
-
 exports.createNewTour = catchAsync(async (req, res, next) => {
   // const newTour = new Tour({ });
   // newTour.save();

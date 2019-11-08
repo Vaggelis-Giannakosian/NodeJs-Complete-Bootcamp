@@ -168,6 +168,15 @@ tourSchema.pre(/^find/, function(next) {
   next();
 });
 
+//populate guides on find hook
+tourSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordChangedAt'
+  });
+  next();
+});
+
 tourSchema.post(/^find/, function(docs, next) {
   console.log(`Query took ${Date.now() - this.start} milliseconds!`);
   // console.log(docs);
