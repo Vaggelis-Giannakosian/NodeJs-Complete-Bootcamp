@@ -2,7 +2,9 @@ const express = require('express');
 const reviewController = require('./../controllers/reviewController');
 const authController = require('./../controllers/authenticationController');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
+
+//mergeParams get the :tourId from the tour router if exists
 
 router
   .route('/')
