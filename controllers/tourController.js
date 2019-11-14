@@ -1,7 +1,7 @@
 const Tour = require('./../models/tourModel');
 // const APIFeatures = require('./../utils/apiFeatures');
 const catchAsync = require('./../utils/catchAsync');
-// const AppError = require('./../utils/appError');
+const AppError = require('./../utils/appError');
 const factory = require('./handlerFactory');
 
 exports.aliasTopTours = (req, res, next) => {
@@ -114,40 +114,31 @@ exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateTour = async (req, res) => {
-  try {
-    const tour = await Tour.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
+exports.getToursWithin = catchAsync(async (req, res, next) => {
+  const { distance, latlng, unit } = req.params;
+  const [lat, lng] = latlng.split(',');
+  const radius =
+    unit === 'mi' ? distance / 3963.2 : distance / 6378.1;
+  if (!lat || !lng)
+    return next(
+      new AppError(
+        'Please provide latitude and longitude in the format lat,lng',
+        400
+      )
     );
 
-    res.status(200).json({
-      status: 'success',
-      data: {
-        tour
-      }
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      message: error
-    });
-  }
-};
+  console.log(distance, latlng, unit);
 
-exports.deleteTour = async (req, res) => {
-  try {
-    await Tour.findByIdAndDelete(req.params.id);
-
-    res.status(204).json({
-      status: 'success',
-      data: null
-    });
-  } catch (error) {
-    res.status(404).json({
-      status: 'fail',
-      message: error
-    });
-  }
-};
+  const tours = await Tour.find({
+    startLocation: {
+      $geoWithin: { $centerSphere: [[lng, lat], radius] }
+    }
+  });
+  res.status(200).json({
+    status: 'success',
+    results: tours.length,
+    data: {
+      tours
+    }
+  });
+});
