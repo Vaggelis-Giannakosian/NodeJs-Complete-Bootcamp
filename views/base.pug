@@ -1,7 +1,7 @@
 doctype html
 html
     head
-        title Natours | Exciting tours for adventurous people
+        title Natours | #{title}
         link(rel='stylesheet' href='css/style.css')
         link(rel='shortcut icon' type='image/png' href='img/favicon.png')
         link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
@@ -9,41 +9,15 @@ html
         
     body
         // header
-        header(class='header')
-            nav(class='nav nav--tours')
-                a(href='#' class='nav__el') All tours
-                form(class='nav__search')
-                    button(class='nav__search-btn')
-                        svg
-                            use(xlink:href='img/icons.svg#icon-search')
-                    input(type='text' placeholder='Search tours' class='nav__search-input')  
-            div(class='header__logo')
-                img(src='img/logo-white.png' alt='Natours logo')      
-            nav(class='nav nav--user')
-                //- a(href='#' class='nav__el') My bookings
-                //- a(href='#' class='nav__el')
-                //-     img(src='img/users/user-1.jpg' alt='User photo' class='nav__user-img')
-                //-     span Lostre
-                button(class='nav__el') Log in
-                button(class='nav__el nav__el--cta') Sign up
+        include _header
                 
                 
         // Content                
-        main.main
-            h1= tour
+        block content
+            h1 This is a placeholder heading
             
             
-            
-        footer.footer
-            .footer__logo
-                img(src="img/logo-green.png" alt="Natours logo")
-            div
-                ul.footer__nav
-                    li: a(href="#") About us               
-                    li: a(href="#") Download apps              
-                    li: a(href="#") Become a guide               
-                    li: a(href="#") Careers               
-                    li: a(href="#") Contact              
-                p.footer__copyright &copy; by Jonas Schmedtmann. Feel free to use this project for your own purposes, EXCEPT producing your own courses for tutorials!
+        // Footer    
+        include _footer
        
         
