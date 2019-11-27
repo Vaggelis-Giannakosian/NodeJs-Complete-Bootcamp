@@ -23,7 +23,7 @@ exports.getTour = catchAsync(async (req, res) => {
 
   //2) Render the template
   res.status(200).render('tour', {
-    title: 'The Forest Hiker',
+    title: `${tour.name} Tour`,
     tour
   });
 });
