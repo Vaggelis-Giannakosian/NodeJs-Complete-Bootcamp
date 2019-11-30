@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cookieParser = require('cookie-parser');
 const AppError = require('./utils/appError');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
@@ -48,6 +49,7 @@ app.use(
     limit: '10kb'
   })
 );
+app.use(cookieParser());
 
 // Data Sanitization against NoSql query injection
 app.use(mongoSanitize());
