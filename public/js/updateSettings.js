@@ -2,19 +2,24 @@
 import axios from 'axios';
 import { showAlert } from './alerts';
 
-//update data
-export const updateData = async (name, email) => {
+//type is either password or data
+export const updateSettings = async (data, type) => {
   try {
+    const url =
+      type === 'data'
+        ? 'http://localhost:3000/api/v1/users/updateMe'
+        : 'http://localhost:3000/api/v1/users/updateMyPassword';
+
     const res = await axios({
       method: 'PATCH',
-      url: 'http://localhost:3000/api/v1/users/updateMe',
-      data: {
-        name,
-        email
-      }
+      url: url,
+      data: data
     });
     if (res.data.status === 'success') {
-      showAlert('success', 'Details updated successfully!');
+      showAlert(
+        'success',
+        `${type.toUpperCase()} updated successfully!`
+      );
     }
   } catch (error) {
     showAlert('error', error.response.data.message);
