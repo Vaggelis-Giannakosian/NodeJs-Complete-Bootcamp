@@ -39,3 +39,10 @@ exports.getLoginForm = (req, res) => {
     title: `Log into your account`
   });
 };
+
+exports.getAccount = (req, res) => {
+  //2) Render the template
+  res.status(200).render('account', {
+    title: `Your Account`
+  });
+};
