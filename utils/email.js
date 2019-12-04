@@ -11,20 +11,26 @@ module.exports = class Email {
   }
 
   newTransport() {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'production') {
+      //sendgrid
       return nodemailer.createTransport({
-        host: process.env.EMAIL_HOST,
-        port: process.env.EMAIL_PORT,
+        service: 'SendGrid',
         auth: {
-          user: process.env.EMAIL_USERNAME,
-          pass: process.env.EMAIL_PASSWORD
+          user: process.env.SENDGRID_USERNAME,
+          pass: process.env.SENDGRID_PASSWORD
         }
-        //activate in gmail "less secure app" option
       });
     }
 
-    //create transporter from sendgrid
-    return 1;
+    return nodemailer.createTransport({
+      host: process.env.EMAIL_HOST,
+      port: process.env.EMAIL_PORT,
+      auth: {
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD
+      }
+      //activate in gmail "less secure app" option
+    });
   }
 
   //send the actual email
@@ -50,10 +56,17 @@ module.exports = class Email {
 
     // create a transport and send email
 
-    await this.newTransport.sendMail(mailOptions);
+    await this.newTransport().sendMail(mailOptions);
   }
 
   async sendWelcome() {
     await this.send('welcome', 'Welcome to the Natours Family');
+  }
+
+  async sendPasswordReset() {
+    await this.send(
+      'passwordReset',
+      'Your password reset token (valid for ony 10 minutes)'
+    );
   }
 };
