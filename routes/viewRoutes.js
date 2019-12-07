@@ -24,6 +24,11 @@ router.get(
   viewController.getLoginForm
 );
 router.get('/me', authController.protect, viewController.getAccount);
+router.get(
+  '/my-tours',
+  authController.protect,
+  viewController.getMyTours
+);
 router.post(
   '/submit-user-data',
   authController.protect,
