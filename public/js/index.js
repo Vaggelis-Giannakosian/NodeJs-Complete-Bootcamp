@@ -4,6 +4,7 @@ import '@babel/polyfill';
 import { login, logout } from './login';
 import { displayMap } from './mapbox';
 import { updateSettings } from './updateSettings';
+import { bookTour } from './stripe';
 
 //DOM Elements
 const mapBox = document.getElementById('map');
@@ -11,6 +12,7 @@ const loginForm = document.querySelector('.form--login');
 const logoutBtn = document.querySelector('.nav__el--logout');
 const updateForm = document.querySelector('.form-user-data');
 const updatePassword = document.querySelector('.form-user-settings');
+const bookTourBtn = document.getElementById('book-tour');
 //Delegation
 
 if (mapBox) {
@@ -71,5 +73,14 @@ if (updatePassword) {
     document.getElementById('password-current').value = '';
     document.getElementById('password').value = '';
     document.getElementById('password-confirm').value = '';
+  });
+}
+
+if (bookTourBtn) {
+  bookTourBtn.addEventListener('click', async function(e) {
+    this.textContent = 'Processing...';
+    e.preventDefault();
+    const { tourId } = this.dataset;
+    await bookTour(tourId);
   });
 }
