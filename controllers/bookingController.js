@@ -4,7 +4,7 @@ const Tour = require('./../models/tourModel');
 const catchAsync = require('./../utils/catchAsync');
 // const APIFeatures = require('./../utils/apiFeatures');
 // const AppError = require('./../utils/appError');
-// const factory = require('./handlerFactory');
+const factory = require('./handlerFactory');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   //get currently booked tour
@@ -57,3 +57,9 @@ exports.createBookingCheckout = catchAsync(async (req, res, next) => {
 
   next();
 });
+
+exports.getBookings = factory.getAll(Booking);
+exports.getSingleBooking = factory.getOne(Booking);
+exports.createBooking = factory.createOne(Booking);
+exports.updateBooking = factory.updateOne(Booking);
+exports.deleteBooking = factory.deleteOne(Booking);
